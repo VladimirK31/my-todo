@@ -66,15 +66,18 @@
 .buttonTasks {
   background-color: rgb(216, 77, 77);
   color: beige;
+  border-radius: 6px;
 }
 .buttonInput {
   background-color: rgb(75, 228, 126);
   color: beige;
+  border-radius: 6px;
 }
 .checkbox {
 }
 
 .todo {
-  border-style: double;
+  border-style: inset;
   padding-left: 30px;
+  margin-left: 20px;
 }

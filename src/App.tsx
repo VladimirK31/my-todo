@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { v1 } from 'uuid'
 import './App.css'
+import { FullInput } from './Components/FullInput'
 import { Todolist } from './Todolist'
 
 export type TasksPropsType = {
@@ -41,6 +42,34 @@ function App() {
       { id: v1(), title: 'GraphQL2', isDone: false },
     ],
   })
+  const editTask = (todolistID: string, taskID: string, newTitle: string) => {
+    setTasks({
+      ...tasks,
+      [todolistID]: tasks[todolistID].map((el) =>
+        el.id === taskID ? { ...el, title: newTitle } : el
+      ),
+    })
+  }
+
+  const editTodolist = (todolistID: string, newTitle: string) => {
+    setTodolists(
+      todolists.map((el) =>
+        el.id === todolistID ? { ...el, title: newTitle } : el
+      )
+    )
+  }
+
+  const addTodolist = (newTitle: string) => {
+    let newID = v1()
+    let newTodolist: TodolistType = {
+      id: newID,
+      title: newTitle,
+      filter: 'All',
+    }
+    setTodolists([newTodolist, ...todolists])
+    setTasks({ ...tasks, [newID]: [] })
+  }
+
   const removeTodolist = (todolistID: string) => {
     setTodolists(todolists.filter((el) => el.id !== todolistID))
     delete tasks[todolistID]
@@ -80,13 +109,13 @@ function App() {
       )
     )
   }
-  function addTask(todolistID: string, title: string) {
+  function addTask(taskID: string, title: string) {
     let newTask = {
       id: v1(),
       title,
       isDone: false,
     }
-    setTasks({ ...tasks, [todolistID]: [newTask, ...tasks[todolistID]] })
+    setTasks({ ...tasks, [taskID]: [newTask, ...tasks[taskID]] })
 
     // let newTasks = [task, ...tasks]
     // setTasks(newTasks)
@@ -111,6 +140,7 @@ function App() {
 
   return (
     <div className="App">
+      <FullInput callBack={addTodolist} />
       {todolists.map((tl) => {
         let taskForTodolist = tasks[tl.id]
         if (tl.filter === 'Active') {
@@ -121,6 +151,7 @@ function App() {
         }
         return (
           <Todolist
+            editTodolist={editTodolist}
             todolistID={tl.id}
             key={tl.id}
             filter={tl.filter}
@@ -131,6 +162,7 @@ function App() {
             changeFilter={changeFilter}
             changeStatus={changeStatus}
             removeTodolist={removeTodolist}
+            editTask={editTask}
           />
         )
       })}
