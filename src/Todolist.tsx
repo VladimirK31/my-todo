@@ -12,7 +12,7 @@ export type TodolistPropsType = {
   filter: FilterValueType
   title: string
   tasks: TasksPropsType[]
-  deletTask: (todolistID: string, taskid: string) => void
+  deleteTask: (todolistID: string, taskid: string) => void
   changeFilter: (todolistID: string, value: FilterValueType) => void
   addTask: (taskID: string, title: string) => void
   changeStatus: (
@@ -95,7 +95,7 @@ export function Todolist(props: TodolistPropsType) {
       </div> */}
       <div>
         {props.tasks.map((t) => {
-          const onClickHandler = () => props.deletTask(props.todolistID, t.id)
+          const onClickHandler = () => props.deleteTask(props.todolistID, t.id)
           const onchangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) =>
             changeStatusHandler(t.id, e.currentTarget.checked)
           return (

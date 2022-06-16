@@ -28,6 +28,9 @@ export type TodolistType = {
   title: string
   filter: FilterValueType
 }
+export type TasksStateType = {
+  [key: string]: TasksPropsType[]
+}
 
 function App() {
   let todolistID1 = v1()
@@ -38,7 +41,7 @@ function App() {
     { id: todolistID2, title: 'What to buy', filter: 'All' },
   ])
 
-  let [tasks, setTasks] = useState({
+  let [tasks, setTasks] = useState<TasksStateType>({
     [todolistID1]: [
       { id: v1(), title: 'HTML&CSS', isDone: true },
       { id: v1(), title: 'JS', isDone: true },
@@ -86,7 +89,7 @@ function App() {
     setTodolists(todolists.filter((el) => el.id !== todolistID))
     delete tasks[todolistID]
   }
-  function deletTask(todolistID: string, taskid: string) {
+  function deleteTask(todolistID: string, taskid: string) {
     setTasks({
       ...tasks,
       [todolistID]: tasks[todolistID].filter((el) => el.id !== taskid),
@@ -175,7 +178,7 @@ function App() {
                     title={tl.title}
                     tasks={taskForTodolist}
                     addTask={addTask}
-                    deletTask={deletTask}
+                    deleteTask={deleteTask}
                     changeFilter={changeFilter}
                     changeStatus={changeStatus}
                     removeTodolist={removeTodolist}
