@@ -1,6 +1,6 @@
-import { stringify } from 'querystring'
 import { v1 } from 'uuid'
 import { TasksStateType } from '../App'
+import { AddTodolistAT, RemoveTodolistAT } from './TodolistReducer'
 
 export type DeleteTaskAT = ReturnType<typeof deleteTaskAC>
 export type AddTaskAT = ReturnType<typeof addTaskAC>
@@ -12,6 +12,8 @@ export type AllActionType =
   | AddTaskAT
   | ChangeTaskStatusAT
   | ChangeTitleStatusAT
+  | AddTodolistAT
+  | RemoveTodolistAT
 
 export const tasksReducer = (
   tasks: TasksStateType,
@@ -51,6 +53,17 @@ export const tasksReducer = (
           t.id === action.taskId ? { ...t, title: action.title } : t
         ),
       }
+    }
+    case 'ADD-TODOLIST': {
+      return {
+        ...tasks,
+        [action.todolistId]: [],
+      }
+    }
+    case 'REMOVE-TODOLIST': {
+      let copyTasks = { ...tasks }
+      delete copyTasks[action.id]
+      return copyTasks
     }
 
     default:
