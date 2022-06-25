@@ -54,46 +54,11 @@ function AppWithRedux() {
   let todolists = useSelector<AppRootStateType, Array<TodolistType>>(
     (state) => state.todolists
   )
-
-  let tasks = useSelector<AppRootStateType, TasksStateType>(
-    (state) => state.tasks
-  )
   let dispatch = useDispatch()
-
-  const editTodolist = (todolistID: string, newTitle: string) => {
-    dispatch(ChangeTodolistNewTitleTypeAC(todolistID, newTitle))
-  }
-
   const addTodolist = (newTitle: string) => {
     let action = AddTodolistAC(newTitle)
     dispatch(action)
   }
-
-  const removeTodolist = (todolistID: string) => {
-    let action = RemoveTodolistAC(todolistID)
-    dispatch(action)
-  }
-
-  function changeFilterTodolist(todolistID: string, value: FilterValueType) {
-    dispatch(ChangeTodolistFilterAC(todolistID, value))
-  }
-  function deleteTask(taskid: string, todolistID: string) {
-    dispatch(deleteTaskAC(taskid, todolistID))
-  }
-  function addTask(title: string, taskID: string) {
-    dispatch(addTaskAC(title, taskID))
-  }
-  const changeStatus = (
-    currentId: string,
-    checkedValue: boolean,
-    todolistID: string
-  ) => {
-    dispatch(changeTaskStatusAC(currentId, checkedValue, todolistID))
-  }
-  const editTask = (taskID: string, newTitle: string, todolistID: string) => {
-    dispatch(changeTitleStatusAC(taskID, newTitle, todolistID))
-  }
-
   return (
     <div className="App">
       <Box sx={{ flexGrow: 1 }}>
