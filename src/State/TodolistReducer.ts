@@ -29,8 +29,10 @@ export type AllActionType =
   | ChangeTodolistNewTitleTypeAT
   | ChangeTodolistFilterAT
 
+const initialState: Array<TodolistType> = []
+
 export const todolistReducer = (
-  todolists: Array<TodolistType>,
+  todolists = initialState,
   action: AllActionType
 ): Array<TodolistType> => {
   switch (action.type) {
@@ -44,7 +46,7 @@ export const todolistReducer = (
         title: action.title,
         filter: 'All',
       }
-      return [...todolists, newTodolist]
+      return [newTodolist, ...todolists]
 
     case 'CHANGE-TODOLIST-TITLE':
       return todolists.map((el) =>
