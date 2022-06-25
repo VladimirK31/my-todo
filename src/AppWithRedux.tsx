@@ -9,26 +9,10 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
-import React, { useReducer, useState } from 'react'
-import { v1 } from 'uuid'
 import './App.css'
 import { FullInput } from './Components/FullInput'
-import { Todolist } from './Todolist'
 import Container from '@mui/material/Container'
-import {
-  AddTodolistAC,
-  ChangeTodolistFilterAC,
-  ChangeTodolistNewTitleTypeAC,
-  RemoveTodolistAC,
-  todolistReducer,
-} from './State/TodolistReducer'
-import {
-  addTaskAC,
-  changeTaskStatusAC,
-  changeTitleStatusAC,
-  deleteTaskAC,
-  tasksReducer,
-} from './State/TasksReducer '
+import { AddTodolistAC } from './State/TodolistReducer'
 import { useSelector } from 'react-redux'
 import { AppRootStateType } from './State/Store'
 import { useDispatch } from 'react-redux'
