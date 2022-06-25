@@ -68,8 +68,8 @@ export const RemoveTodolistAC = (id: string): RemoveTodolistAT => {
 export const AddTodolistAC = (title: string): AddTodolistAT => {
   return {
     type: 'ADD-TODOLIST',
-    title: title,
     todolistId: v1(),
+    title: title,
   }
 }
 export const ChangeTodolistNewTitleTypeAC = (

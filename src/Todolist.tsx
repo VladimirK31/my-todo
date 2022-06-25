@@ -12,17 +12,17 @@ export type TodolistPropsType = {
   filter: FilterValueType
   title: string
   tasks: TasksPropsType[]
-  deleteTask: (todolistID: string, taskid: string) => void
+  deleteTask: (taskid: string, todolistID: string) => void
   changeFilter: (todolistID: string, value: FilterValueType) => void
-  addTask: (taskID: string, title: string) => void
+  addTask: (title: string, taskID: string) => void
   changeStatus: (
-    todolistID: string,
     currentId: string,
-    checkedValue: boolean
+    checkedValue: boolean,
+    todolistID: string
   ) => void
   removeTodolist: (todolistID: string) => void
   editTodolist: (todolistID: string, newTitle: string) => void
-  editTask: (todolistID: string, taskID: string, newTitle: string) => void
+  editTask: (taskID: string, newTitle: string, todolistID: string) => void
 }
 
 export function Todolist(props: TodolistPropsType) {
@@ -56,22 +56,22 @@ export function Todolist(props: TodolistPropsType) {
   //     addTask()
   //   }
   // }
-  const changeStatusHandler = (tID: string, checkedValue: boolean) => {
-    props.changeStatus(props.todolistID, tID, checkedValue)
+  const changeStatusHandler = (checkedValue: boolean, tID: string) => {
+    props.changeStatus(tID, checkedValue, props.todolistID)
   }
   const removeTodolistHandler = () => {
     props.removeTodolist(props.todolistID)
   }
 
   const addTskHandler = (title: string) => {
-    props.addTask(props.todolistID, title)
+    props.addTask(title, props.todolistID)
   }
 
   const editTodolistHandler = (newTitle: string) => {
     props.editTodolist(props.todolistID, newTitle)
   }
   const editTaskHandler = (tID: string, newTitle: string) => {
-    props.editTask(props.todolistID, tID, newTitle)
+    props.editTask(tID, newTitle, props.todolistID)
   }
   return (
     <div>
@@ -95,9 +95,9 @@ export function Todolist(props: TodolistPropsType) {
       </div> */}
       <div>
         {props.tasks.map((t) => {
-          const onClickHandler = () => props.deleteTask(props.todolistID, t.id)
+          const onClickHandler = () => props.deleteTask(t.id, props.todolistID)
           const onchangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) =>
-            changeStatusHandler(t.id, e.currentTarget.checked)
+            changeStatusHandler(e.currentTarget.checked, t.id)
           return (
             <div key={t.id} className={t.isDone ? 'is-done' : ''}>
               <Checkbox onChange={onchangeStatusHandler} checked={t.isDone} />
