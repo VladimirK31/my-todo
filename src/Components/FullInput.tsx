@@ -7,7 +7,9 @@ type FullInputPropsType = {
   callBack: (title: string) => void
 }
 
-export const FullInput = (props: FullInputPropsType) => {
+export const FullInput = React.memo((props: FullInputPropsType) => {
+  console.log('FullInput')
+
   let [title, setTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
   let onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +26,10 @@ export const FullInput = (props: FullInputPropsType) => {
     }
   }
   let onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    setError(null)
+    if (error !== null) {
+      setError(null)
+    }
+
     if (e.charCode === 13) {
       addTask()
     }
@@ -45,4 +50,4 @@ export const FullInput = (props: FullInputPropsType) => {
       </IconButton>
     </div>
   )
-}
+})

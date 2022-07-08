@@ -1,7 +1,7 @@
 import { Delete } from '@mui/icons-material'
 import { Button, Checkbox, IconButton } from '@mui/material'
 
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useCallback } from 'react'
 import { FilterValueType, TasksPropsType } from './App'
 import './App.css'
 import { EditableSpan } from './Components/EditableSpan'
@@ -25,7 +25,7 @@ export type TodolistPropsType = {
   editTask: (taskID: string, newTitle: string, todolistID: string) => void
 }
 
-export function Todolist(props: TodolistPropsType) {
+export const Todolist = React.memo((props: TodolistPropsType) => {
   // let [title, setTitle] = useState('')
   // const [error, setError] = useState<string | null>(null)
   // let onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,9 +63,9 @@ export function Todolist(props: TodolistPropsType) {
     props.removeTodolist(props.todolistID)
   }
 
-  const addTskHandler = (title: string) => {
+  const addTskHandler = useCallback((title: string) => {
     props.addTask(title, props.todolistID)
-  }
+  }, [])
 
   const editTodolistHandler = (newTitle: string) => {
     props.editTodolist(props.todolistID, newTitle)
@@ -133,4 +133,4 @@ export function Todolist(props: TodolistPropsType) {
       </Button>
     </div>
   )
-}
+})

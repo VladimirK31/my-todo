@@ -1,23 +1,24 @@
 import { TextField } from '@mui/material'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useCallback, useState } from 'react'
 type EditableSpanPropsType = {
   title: string
   callBack: (title: string) => void
 }
 
-export const EditableSpan = (props: EditableSpanPropsType) => {
+export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
+  console.log('editable called')
   let [edit, setEdit] = useState(false)
   let [newTitle, setNewTitle] = useState(props.title)
 
-  const onDoubleClickHandler = () => {
+  const onDoubleClickHandler = useCallback(() => {
     setEdit(!edit)
     props.callBack(newTitle)
-  }
-  let onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  }, [])
+  let onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     {
       setNewTitle(e.currentTarget.value)
     }
-  }
+  }, [])
   return edit ? (
     <TextField
       variant="standard"
@@ -29,4 +30,4 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
   ) : (
     <span onDoubleClick={onDoubleClickHandler}>{props.title}</span>
   )
-}
+})

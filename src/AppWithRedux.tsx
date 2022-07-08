@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux'
 import { AppRootStateType } from './State/Store'
 import { useDispatch } from 'react-redux'
 import { TodolistWithTasks } from './TodolistWithTasks'
+import { useCallback } from 'react'
 
 export type TasksPropsType = {
   id: string
@@ -39,10 +40,13 @@ function AppWithRedux() {
     (state) => state.todolists
   )
   let dispatch = useDispatch()
-  const addTodolist = (newTitle: string) => {
-    let action = AddTodolistAC(newTitle)
-    dispatch(action)
-  }
+  const addTodolist = useCallback(
+    (newTitle: string) => {
+      let action = AddTodolistAC(newTitle)
+      dispatch(action)
+    },
+    [dispatch]
+  )
   return (
     <div className="App">
       <Box sx={{ flexGrow: 1 }}>
@@ -71,7 +75,7 @@ function AppWithRedux() {
         <Grid container spacing={5}>
           {todolists.map((tl) => {
             return (
-              <Grid item>
+              <Grid item key={tl.id}>
                 <Paper style={{ padding: '10px' }}>
                   <TodolistWithTasks key={tl.id} todolist={tl} />
                 </Paper>

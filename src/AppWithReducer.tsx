@@ -88,13 +88,13 @@ function AppWithReducer() {
     dispatchToTasks(action)
   }
 
-  function changeFilterTodolist(todolistID: string, value: FilterValueType) {
+  const changeFilterTodolist = (todolistID: string, value: FilterValueType) => {
     dispatchToTodolists(ChangeTodolistFilterAC(todolistID, value))
   }
-  function deleteTask(taskid: string, todolistID: string) {
+  const deleteTask = (taskid: string, todolistID: string) => {
     dispatchToTasks(deleteTaskAC(taskid, todolistID))
   }
-  function addTask(title: string, taskID: string) {
+  const addTask = (title: string, taskID: string) => {
     dispatchToTasks(addTaskAC(title, taskID))
   }
   const changeStatus = (
